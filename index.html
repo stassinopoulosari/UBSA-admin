@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="apple-touch-icon" sizes="57x57" href="assets/ico/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="assets/ico/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="assets/ico/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/ico/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="assets/ico/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="assets/ico/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="assets/ico/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="assets/ico/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/ico/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="assets/ico/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/ico/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="assets/ico/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/ico/favicon-16x16.png">
+  <link rel="manifest" href="assets/ico/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="assets/ico/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/style.css">
+  <title>UBSA Panel</title>
+</head>
+
+<body>
+  <br>
+  <div class="container">
+    <div class="card container">
+      <h1>Log In to UBSA</h1>
+      <form>
+        <div class="alert alert-danger" role="alert" id="loginFailAlert">
+          Your username or password is incorrect.
+        </div>
+        <div class="alert alert-success" role="alert" id="loginSuccessAlert">
+          Login succeeded. Redirecting...
+        </div>
+        <div class="form-group">
+          <label for="inputEmail">Email address</label>
+          <input type="email" class="form-control" id="inputEmail" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+          <label for="inputPassword">Password</label>
+          <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-primary" id="loginButton">Log in</button>
+      </form>
+    </div>
+  </div>
+</body>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-database.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyC6-1dfBuSDjhruDasTl5vExqOXcFHEfww",
+    authDomain: "ubsa-fb.firebaseapp.com",
+    databaseURL: "https://ubsa-fb.firebaseio.com",
+    projectId: "ubsa-fb",
+    storageBucket: "ubsa-fb.appspot.com",
+    messagingSenderId: "295845474213",
+    appId: "1:295845474213:web:b1c75f9d4f710e53"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+<script src="assets/loginScreen.js"></script>
+
+</html>

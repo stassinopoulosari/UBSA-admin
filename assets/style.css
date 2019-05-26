@@ -1,0 +1,43 @@
+.card {
+  padding:1em;
+  border: 1px solid #E5E5E5;
+  margin:0;
+  margin-top:1em;
+  margin-bottom:1em;
+}
+#calendarContainer {
+  border: 1px solid #99b6e5;
+}
+#calendarContainer>.row:nth-child(1) {
+  background-color: #99b6e5;
+  padding:1em;
+}
+.panelCalendarDate, .panelCalendarHeading {
+  padding:2em;
+  min-height:5vh;
+  position:relative;
+  white-space:nowrap;
+  overflow:scroll;
+}
+.panelCalendarHeading {
+  background-color: #89a6d5;
+}
+.failure {
+  background-color: #f8d7da;
+}
+.tagifyable {
+  font-size:80%;
+  line-height:115%;
+
+}
+.insertRow {
+  height: 50%;
+  line-height: 5px;
+  width:100%;
+  border:none;
+}
+
+.tagify--notAllowed {
+  background-color:#E5E5E5;
+  --tag-bg: #E5E5E5;
+}
