@@ -21,4 +21,13 @@
       }
     });
   }
+
+  window.resetPassword = function() {
+    var email = prompt("Please enter your email.");
+    firebase.auth().sendPasswordResetEmail(email).then(() => {
+      alert("The email has been sent. Please check your email!");
+    }).catch(() => {
+      alert("Something's gone wrong and the email could not be sent.");
+    });
+  }
 })();

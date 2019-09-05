@@ -149,6 +149,8 @@ var readyToLoad = () => {
 
       $startDate.valueAsDate = new Date(bounds.start);
       $endDate.valueAsDate = new Date(bounds.end);
+
+      renderCalendarString();
     });
 
 
@@ -218,7 +220,7 @@ var readyToLoad = () => {
 
       for (classRow in classes) {
         if ((index > 0 && dateFromStr(classes[keys[index - 1]].end) - dateFromStr(classes[classRow].start) < -60000)) {
-          $tbody.innerHTML += "<tr class='insertRow' id='" + sanitize(identifier) + "-insertRow-" + sanitize(classRow) + "'><td></td><td></td><td></td><td class='text-center'><a href='javascript:insertRowBefore(\"" + sanitize(classRow) + "\", \"" + (index == 0 ? "" : sanitize(keys[index - 1])) + "\", \"" + sanitize(identifier) + "\")'>+</a></td></tr>"
+          $tbody.innerHTML += "<tr class='insertRow' id='" + sanitize(identifier) + "-insertRow-" + sanitize(classRow) + "'><td></td><td></td><td></td><td class='text-center'><a href='javascript:insertRowAfter(\"" + sanitize(classRow) + "\", \"" + (index == 0 ? "" : sanitize(keys[index - 1])) + "\", \"" + sanitize(identifier) + "\")'>+</a></td></tr>"
         }
         var $row = document.createElement("tr");
         $row.setAttribute("id", identifier + "-row-" + classRow);
@@ -555,7 +557,7 @@ var readyToLoad = () => {
             firebase.database().ref(path).set(null);
           }
         };
-        window.insertRowBefore = function(classRow, pClassKey, sIdent) {
+        window.insertRowAfter = function(classRow, pClassKey, sIdent) {
           var newKey = pClassKey + "a";
           var start = schedules[sIdent][pClassKey].end;
           var end = schedules[sIdent][classRow].start;
