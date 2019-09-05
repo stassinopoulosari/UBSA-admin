@@ -17,7 +17,7 @@
   min-height:5vh;
   position:relative;
   white-space:nowrap;
-  overflow:scroll;
+  overflow:hidden;
 }
 .panelCalendarHeading {
   background-color: #89a6d5;
