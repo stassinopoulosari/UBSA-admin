@@ -87,6 +87,19 @@
           <ul id="panel-symbolList" class="list-group">
           </ul>
         </div>
+        <div class="card">
+          <h2>Advanced <button class="btn btn-primary" onclick="toggleAdvancedConfiguration();this.innerText = this.innerText == 'Show' ? 'Hide' : 'Show';">Show</button></h2>
+          <div id="panel-advancedConfig" class="">
+            <div class="form-group">
+              <label for="advancedConfig-json">JSON Configuration</label>
+              <textarea class="form-control" id="advancedConfig-json" placeholder="Don't mess with this if you don't know what it is!"></textarea>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-12 col-md-6"><button class="btn btn-primary form-control">Save</button></div>
+              <div class="col-sm-12 col-md-6"><button class="btn btn-warning form-control">Revert</button></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 

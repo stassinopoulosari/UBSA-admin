@@ -249,15 +249,17 @@ var readyToLoad = () => {
       (() => {
         var $row = document.createElement("tr");
         $row.setAttribute("id", identifier + "-toAddRow");
+        $row.setAttribute("class", "addingRow");
+        $row.setAttribute("data-sked", identifier);
         $row.setAttribute("rowspan", "2");
         var cols = ["", "", "", ""];
         cols.forEach((a, index) => {
           cols[index] = document.createElement("td");
           $row.appendChild(cols[index]);
         });
-        cols[0].innerHTML = "<input class='tagifyableName' id='" + sanitize(identifier) + "-add-name' type='text' placeholder='Name'/>";
+        cols[0].innerHTML = "<input class='tagifyableName addingField' id='" + sanitize(identifier) + "-add-name' type='text' placeholder='Name'/>";
         cols[1].innerHTML = "<input class='form-control' id='" + sanitize(identifier) + "-add-start' type='time' value='" + lastClass.end + "'/>";
-        cols[2].innerHTML = "<input class='form-control' id='" + sanitize(identifier) + "-add-end' type='time' />";
+        cols[2].innerHTML = "<input class='form-control addingField' id='" + sanitize(identifier) + "-add-end' type='time' />";
         cols[3].innerHTML = "<button type='submit' class='btn btn-success form-control' onclick='addSkedRow(\"" + sanitize(identifier) + "\", \"" + sanitize(lcLabel) + "\")'>Add</button>";
         $tbody.appendChild($row);
       })();
@@ -396,6 +398,10 @@ var readyToLoad = () => {
               anyAreEmpty = true;
               console.log(id + "; e m p t y");
               $row.setAttribute("class", "table-danger");
+            } else {
+              if($row.getAttribute("class") && $row.getAttribute("class").indexOf("table-danger") != -1) {
+                $row.setAttribute("class", $row.getAttribute("class").split("table-danger").join(""));
+              }
             }
           });
           if (anyAreEmpty) return;
@@ -441,6 +447,27 @@ var readyToLoad = () => {
         window.saveAllSkeds = function(sIdentifier) {
           var schedule = schedules[sIdentifier];
 
+          var addingRows = document.getElementsByClassName("addingRow");
+          for (var addingRowIndex = 0; addingRowIndex < addingRows.length; addingRowIndex++) {
+            var row = addingRows[addingRowIndex];
+            console.log(row);
+            if(typeof row != "object") continue;
+            var skedID = row.getAttribute("data-sked");
+            var addNameID = skedID + "-add-name";
+            var endTimeID = skedID + "-add-end";
+            var toBreak = false;
+            [addNameID, endTimeID].forEach((fieldID) => {
+              var field = document.getElementById(fieldID);
+              if (field.value != "" && field.value != undefined && field.value != "[]") {
+                console.log(fieldID, field.value);
+                toBreak = true;
+              }
+            });
+            if (toBreak) {
+              return;
+            }
+          }
+
           var keys = [];
           for (s in schedule) {
             if (s == "name" || s == "hidden") continue;
@@ -452,16 +479,19 @@ var readyToLoad = () => {
           for (var i = 0; i < keys.length; i++) {
             var key = keys[i];
             var lastID = (i == 0 ? "" : keys[i - 1]);
-            operations.push(saveSkedRow(sIdentifier, key, lastID));
+            var operation = saveSkedRow(sIdentifier, key, lastID);
+            if (!operation) {
+              return;
+            }
+            operations.push(operation);
           }
 
           operations.forEach((operation) => {
-            if (operation == null) {
+            if (!operation) {
               return;
             }
             firebase.database().ref(operation.path).set(operation.payload);
           });
-
 
         };
 
@@ -808,7 +838,7 @@ var readyToLoad = () => {
           }).join("");
           select.innerHTML = options;
         });
-        scheduleArr.splice(0,1);
+        scheduleArr.splice(0, 1);
         [].slice.call(document.getElementsByClassName("configurationSelect")).forEach((select) => {
           var options = scheduleArr.map((schedule) => {
             if (schedule.hidden && select.getAttribute("data-sked") != schedule.value) return "";
@@ -889,6 +919,8 @@ var readyToLoad = () => {
   })();
   delete readyToLoad;
 };
+
+//Global functions
 (() => {
   window.sanitize = (text) => {
     var el = document.createElement("div");
@@ -915,4 +947,20 @@ var readyToLoad = () => {
       location.assign("..");
     }
   });
+})();
+
+(() => {
+  var advancedConfigShow = true;
+  var $advConfigPanel =     document.getElementById("panel-advancedConfig");
+
+  window.toggleAdvancedConfiguration = function() {
+    advancedConfigShow = !advancedConfigShow;
+    if(advancedConfigShow) {
+      $advConfigPanel.style.display = "block";
+    } else {
+      $advConfigPanel.style.display = "none";
+    }
+  }
+
+  toggleAdvancedConfiguration();
 })();
