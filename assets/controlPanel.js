@@ -1,3 +1,9 @@
+const recordLastUpdated = () => {
+  // Add last updated to Firebase
+  firebase.database().ref("schools/" + window.identifier + "/lastUpdated").set(Math.floor(new Date().getTime() / 1000));
+  console.log("Last updated: " + Math.floor(new Date().getTime() / 1000))
+};
+
 var readyToLoad = () => {
   (() => {
     var $calendarHeader = document.getElementById("monthHeader"),
@@ -345,7 +351,7 @@ var readyToLoad = () => {
                                <span class='tagify__tag-text'>${v}</span>
                            </div>
                        </tag>`;
-                } catch (err) {}
+                } catch (err) { }
               }
             },
             whitelist: tagifyWhitelist,
@@ -377,6 +383,7 @@ var readyToLoad = () => {
             name: scheduleName
           });
         };
+
         var saveSkedRow = function(sIdentifier, id, lastID) {
           var $row = document.getElementById(sIdentifier + "-row-" + id);
           var start = document.getElementById(sIdentifier + "-" + id + "-start").value;
@@ -399,7 +406,7 @@ var readyToLoad = () => {
               console.log(id + "; e m p t y");
               $row.setAttribute("class", "table-danger");
             } else {
-              if($row.getAttribute("class") && $row.getAttribute("class").indexOf("table-danger") != -1) {
+              if ($row.getAttribute("class") && $row.getAttribute("class").indexOf("table-danger") != -1) {
                 $row.setAttribute("class", $row.getAttribute("class").split("table-danger").join(""));
               }
             }
@@ -451,7 +458,7 @@ var readyToLoad = () => {
           for (var addingRowIndex = 0; addingRowIndex < addingRows.length; addingRowIndex++) {
             var row = addingRows[addingRowIndex];
             console.log(row);
-            if(typeof row != "object") continue;
+            if (typeof row != "object") continue;
             var skedID = row.getAttribute("data-sked");
             var addNameID = skedID + "-add-name";
             var endTimeID = skedID + "-add-end";
@@ -493,6 +500,7 @@ var readyToLoad = () => {
             firebase.database().ref(operation.path).set(operation.payload);
           });
 
+          // Add last updated to Firebase
         };
 
         window.renameSchedule = (sIdent) => {
@@ -672,6 +680,7 @@ var readyToLoad = () => {
         firebase.database().ref("schools/" + window.identifier + "/symbols/" + key + "/configurable").set(configurable);
       }
       window.deleteSymbol = function(key) {
+
         firebase.database().ref("schools/" + window.identifier + "/schedules").once("value", (snapshot) => {
           if (!snapshot.val()) return;
 
@@ -951,11 +960,11 @@ var readyToLoad = () => {
 
 (() => {
   var advancedConfigShow = true;
-  var $advConfigPanel =     document.getElementById("panel-advancedConfig");
+  var $advConfigPanel = document.getElementById("panel-advancedConfig");
 
   window.toggleAdvancedConfiguration = function() {
     advancedConfigShow = !advancedConfigShow;
-    if(advancedConfigShow) {
+    if (advancedConfigShow) {
       $advConfigPanel.style.display = "block";
     } else {
       $advConfigPanel.style.display = "none";
